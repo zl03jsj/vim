@@ -123,9 +123,9 @@ endif
 
 " 使用Vundle来管理插件，这个必须要有。
 Bundle 'gmarik/vundle'
-
 " 以下为要安装或更新的插件，不同仓库都有（具体书写规范请参考帮助）
 Bundle 'a.vim'
+Bundle 'c.vim'
 Bundle 'Align'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'bufexplorer.zip'
@@ -153,7 +153,6 @@ Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'winmanager'
 Bundle 'altercation/vim-colors-solarized'
-
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -767,6 +766,11 @@ let g:persistentBehaviour = 0	    "当Vim只剩下winManager窗口时，自动�
 " ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
 " 我使用上面的参数生成标签后，对函数使用跳转时会出现多个选择
 " 所以我就将--c++-kinds=+p参数给去掉了，如果大侠有什么其它解决方法希望不要保留呀
+"
+" 产生标准库的ctags
+" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ cpp_src 
+" mac 的标准库所在的目录是:
+" Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/
 filetype plugin indent on
 "-- omnicppcomplete setting --
 " 按下F3自动补全代码，注意该映射语句后不能有其他字符，包括tab；否则按下F3会自动补全一些乱码
