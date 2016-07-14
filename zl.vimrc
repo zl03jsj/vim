@@ -123,6 +123,7 @@ endif
 
 " 使用Vundle来管理插件，这个必须要有。
 Bundle 'gmarik/vundle'
+
 " 以下为要安装或更新的插件，不同仓库都有（具体书写规范请参考帮助）
 Bundle 'a.vim'
 Bundle 'c.vim'
@@ -153,6 +154,7 @@ Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'winmanager'
 Bundle 'altercation/vim-colors-solarized'
+
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -224,11 +226,13 @@ au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 "  < 界面配置 >
 " -----------------------------------------------------------------------------
 set number                                            "显示行号
+set relativenumber
+
 set laststatus=2                                      "启用状态栏信息
 set cmdheight=2                                       "设置命令行的高度为2，默认为1
 set cursorline                                        "突出显示当前行
-set guifont=Monaco:h12 "YaHei_Consolas_Hybrid:h10                 "设置字体:字号（字体名称空格用下划线代替）
-set nowrap                                            "设置不自动换行
+set guifont=Monaco:h11 "YaHei_Consolas_Hybrid:h10                 "设置字体:字号（字体名称空格用下划线代替）
+set wrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 
 " 设置 gVim 窗口初始位置及大小
@@ -634,9 +638,9 @@ set nobackup                                "设置无备份文件
 "  < BufExplorer 插件配置 >
 " -----------------------------------------------------------------------------
 " 快速轻松的在缓存中切换（相当于另一种多个文件间的切换方式）
-" <Leader>be 在当前窗口显示缓存列表并打开选定文件
-" <Leader>bs 水平分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
-" <Leader>bv 垂直分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
+" \be 在当前窗口显示缓存列表并打开选定文件
+" \bs 水平分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
+" \bv 垂直分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
 
 " -----------------------------------------------------------------------------
 "  < ccvext.vim 插件配置 >
@@ -764,13 +768,9 @@ let g:persistentBehaviour = 0	    "当Vim只剩下winManager窗口时，自动�
 " 说明可以参考帮助或网络教程等
 " 使用前先执行如下 ctags 命令（本配置中可以直接使用 ccvext 插件来执行以下命令）
 " ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
+" ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++
 " 我使用上面的参数生成标签后，对函数使用跳转时会出现多个选择
 " 所以我就将--c++-kinds=+p参数给去掉了，如果大侠有什么其它解决方法希望不要保留呀
-"
-" 产生标准库的ctags
-" ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ cpp_src 
-" mac 的标准库所在的目录是:
-" Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/
 filetype plugin indent on
 "-- omnicppcomplete setting --
 " 按下F3自动补全代码，注意该映射语句后不能有其他字符，包括tab；否则按下F3会自动补全一些乱码
@@ -879,38 +879,54 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " -----------------------------------------------------------------------------
 "  < cscope 工具配置 >
 " -----------------------------------------------------------------------------
-" 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
-"if has("cscope")
-"    "设定可以使用 quickfix 窗口来查看 cscope 结果
-"    set cscopequickfix=s-,c-,d-,i-,t-,e-
-"    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
-"    set cscopetag
-"    "如果你想反向搜索顺序设置为1
-"    set csto=0
-"    "在当前目录中添加任何数据库
-"    if filereadable("cscope.out")
-"        cs add cscope.out
-"    "否则添加数据库环境中所指出的
-"    elseif $CSCOPE_DB != ""
-"        cs add $CSCOPE_DB
-"    endif
-"    set cscopeverbose
-"    "快捷键设置
-"    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-"    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-"endif
+" 安装命令: brew install cscope
+" 下面是cscope的常用选项：
+" 现在进入代码的根目录然后：cscope -Rbq。这个命令会生成三个文件：
+" cscope.out, cscope.in.out, cscope.po.out。其中cscope.out是基本的符号索引,
+" 后两个文件是使用"-q"选项生成的，可以加快cscope的索引速度。
+" cscope缺省只解析C文件(.c和.h)、lex文件(.l)和yacc文件(.y)，虽然它也可以支持C++
+" 以及Java，但它在扫描目录时会跳过C++及Java后缀的文件。如果你希望cscope解析C++或
+" Java文件，需要把这些文件的名字和路径保存在一个名为cscope.files的文件.
+" 当cscope发现在当前目录中存在cscope.files时，就会为cscope.files中列出的所有文件
+" 生成索引数据库。
+" 一般用如下命令生成包含cpp文件的cscope.files:
+" find ./ -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files
+" 在cscope.files生成以后，就可以cscope -bq来得到索引（.out）文件了。
+" 四、用Ctrl+]的时候还是跳转不到.m文件中定义的函数。
+" 用ctags -R 命令生成ctags文件的时候默认的不找.m文件玩的。知道了原因后，解决方法
+" 也很简单，上面不是生成了索引库文件cscope.files文件么，另外，ctags 还有一个 -L
+" 选项。 ctags -L ./cscope.files
+if has("cscope")
+    "设定可以使用 quickfix 窗口来查看 cscope 结果
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+    set cscopetag
+    "如果你想反向搜索顺序设置为1
+    set csto=0
+    "在当前目录中添加任何数据库
+    if filereadable("cscope.out")
+        cs add cscope.out
+    "否则添加数据库环境中所指出的
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set cscopeverbose
+    "快捷键设置
+    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
 
 " -----------------------------------------------------------------------------
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-set tags=./tags,~/Documents/mupdf/tags_libstd;
+set tags=./tags,~/Documents/mupdf/tags,~/Documents/mupdf/tags_stl;
 
 " -----------------------------------------------------------------------------
 "  < gvimfullscreen 工具配置 > 请确保已安装了工具
@@ -995,5 +1011,6 @@ au BufRead,BufNewFile,BufEnter * cd %:p:h
 " 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
 
 " let mapleader = ","
+syntax enable
 set background=dark
 color solarized

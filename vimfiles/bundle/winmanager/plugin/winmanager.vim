@@ -1,7 +1,3 @@
-if g:AutoOpenWinManager 
-"vim进入时自动执行 ToggleWindowsManager ，然后移动一次窗口焦点
-autocmd VimEnter * nested call s:ToggleWindowsManager()|1wincmd w 
-endif
 "=============================================================================
 "        File: winmanager.vim
 "      Author: Srinath Avadhanula (srinath@eecs.berkeley.edu)
