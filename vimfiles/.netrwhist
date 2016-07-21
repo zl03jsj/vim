@@ -1,0 +1,3 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/Users/zl03jsj/Documents/openssl/openssl-1.0.2h/demos/sign'
