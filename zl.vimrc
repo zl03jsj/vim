@@ -140,7 +140,8 @@ Bundle 'Mark--Karkat'
 Bundle 'Shougo/neocomplcache.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'OmniCppComplete'
+" Bundle 'OmniCppComplete'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'repeat.vim'
 Bundle 'msanders/snipmate.vim'
@@ -833,18 +834,18 @@ filetype plugin indent on
 "imap <F3> <C-X><C-O>
 " 按下F2根据头文件内关键字补全
 "imap <F2> <C-X><C-I>
-set completeopt=menu,menuone " 关掉智能补全时的预览窗口
-let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
-let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
-let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
-"let OmniCpp_DefaultNamespaces=["std"]
-let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
-let OmniCpp_ShowAccess=1 
+"set completeopt=menu,menuone " 关掉智能补全时的预览窗口
+"let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+"let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+"let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+"let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+"let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+"let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
+"let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
+"let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
+""let OmniCpp_DefaultNamespaces=["std"]
+"let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
+"let OmniCpp_ShowAccess=1 
 
 " -----------------------------------------------------------------------------
 "  < powerline 插件配置 >
@@ -914,7 +915,7 @@ let Tlist_Exit_OnlyWindow=1                 "如果Taglist窗口是最后一个�
 let Tlist_File_Fold_Auto_Close=1            "自动折叠
 let Tlist_WinWidth=30                       "设置窗口宽度
 let Tlist_WinHeight=80
-let Tlist_Use_Right_Window=1                "在右侧窗口中显示
+" let Tlist_Use_Right_Window=1                "在右侧窗口中显示
 
 " -----------------------------------------------------------------------------
 "  < txtbrowser 插件配置 >
@@ -952,31 +953,31 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 用ctags -R 命令生成ctags文件的时候默认的不找.m文件玩的.知道了原因后,解决方法
 " 也很简单,上面不是生成了索引库文件cscope.files文件么,另外,ctags 还有一个 -L
 " 选项. ctags -L ./cscope.files
-if has("cscope")
-    "设定可以使用 quickfix 窗口来查看 cscope 结果
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
-    set cscopetag
-    "如果你想反向搜索顺序设置为1
-    set csto=0
-    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out
-    cs add ~/Documents/mupdf/cscope.out
-    "if filereadable("~/Documents/openssl/openssl-1.0.2h/cscope.out")
-    "    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out        "否则添加数据库环境中所指出的
-    "elseif $CSCOPE_DB != ""
-    "    cs add $CSCOPE_DB
-    "endif
-    set cscopeverbose
-    "快捷键设置
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-endif
+"if has("cscope")
+"    "设定可以使用 quickfix 窗口来查看 cscope 结果
+"    set cscopequickfix=s-,c-,d-,i-,t-,e-
+"    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+"    set cscopetag
+"    "如果你想反向搜索顺序设置为1
+"    set csto=0
+"    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out
+"    cs add ~/Documents/mupdf/cscope.out
+"    "if filereadable("~/Documents/openssl/openssl-1.0.2h/cscope.out")
+"    "    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out        "否则添加数据库环境中所指出的
+"    "elseif $CSCOPE_DB != ""
+"    "    cs add $CSCOPE_DB
+"    "endif
+"    set cscopeverbose
+"    "快捷键设置
+"    nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+"    nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+"    nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+"    nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+"    nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+"    nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+"    nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"    nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+"endif
 
 " -----------------------------------------------------------------------------
 "  < ctags 工具配置 >
@@ -984,6 +985,8 @@ endif
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
 map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+" map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 set tags+=./tags,~/Documents/mupdf/tags,~/Documents/mupdf/tags_stl,~/Documents/openssl/openssl-1.0.2h/tags;
 
 " -----------------------------------------------------------------------------
