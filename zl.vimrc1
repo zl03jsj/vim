@@ -7,12 +7,13 @@ call vundle#begin()
 "Vundle.vim : vim的一个非常好用的插件管理器
 Bundle 'gmarik/Vundle.vim'
 
+Bundle 'taglist.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'sessionman'
 "更酷的启动界面
 "Bundle 'mhinz/vim-startify'
-
 "协作编程
 "Bundle 'FredKSchott/CoVim'
-
 "代码补全
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
@@ -20,32 +21,27 @@ Bundle 'honza/vim-snippets'
 "Bundle 'YanhaoMo/snippets'
 "括号等的自动补全
 Bundle 'Raimondi/delimitMate'
-
 "文件搜索
 Bundle 'kien/ctrlp.vim'
 Bundle 'Shougo/unite.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'vim-scripts/mru.vim'
-
 "静态语法检查
 Bundle 'scrooloose/syntastic'
-
 "代码浏览
 Bundle 'majutsushi/tagbar'
-
 "git支持
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
-
 "美化
 Bundle 'tomasr/molokai'
 Bundle 'morhetz/gruvbox'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bling/vim-airline'
 Bundle 'nathanaelkane/vim-indent-guides'
 "Bundle 'altercation/vim-colors-solarized.git'
 "Bundle 'fholgado/minibufexpl.vim'
-
 "编辑增强
 "多光标编辑
 Bundle 'terryma/vim-multiple-cursors'
@@ -57,31 +53,24 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'godlygeek/tabular'
 "快速移动
 Bundle 'Lokaltog/vim-easymotion'
-
 "tmux支持
 Bundle 'benmills/vimux'
-
 "c/c++
 Bundle 'vim-scripts/a.vim'
 Bundle 'vim-scripts/c.vim'
-
 "org-mode
 Bundle 'jceb/vim-orgmode'
 Bundle 'tpope/vim-speeddating'
-
 "markdown
 Bundle 'plasticboy/vim-markdown'
 "可以通过浏览器实时预览，但是要安装额外依赖，详见官网
 "Bundle 'suan/vim-instant-markdown'
-
 "网页开发
-Bundle 'mattn/emmet-vim'
-
+"Bundle 'mattn/emmet-vim'
 "pyhon
-Bundle 'klen/python-mode'
-
+"Bundle 'klen/python-mode'
 "js
-Bundle 'coolwanglu/vim.js'
+"Bundle 'coolwanglu/vim.js'
 
 "golang
 "Bundle 'fatih/vim-go'
@@ -100,8 +89,7 @@ if has("gui_running")
     set langmenu=en
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
-    "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Book\ 10
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10
+    set guifont=Monaco:h11 
     set guioptions-=e
     set guioptions-=m
     set guioptions-=T
@@ -161,7 +149,9 @@ set t_Co=256                                                    "设置256真彩
 "set cmdheight=2                                                "显示两行命令行
 
 "设置vim主题外观
-colorscheme desert                                              "设置desert高亮主题
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+colorscheme molokai                                             "设置desert高亮主题
 "set background=light                                           "设置vim背景为浅色
 set background=dark                                             "设置vim背景为深色
 set cursorline                                                  "突出显示当前行

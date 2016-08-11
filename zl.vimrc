@@ -61,8 +61,6 @@ endif
 "  < Linux Gvim/Vim 默认配置> 做了一点修改
 " -----------------------------------------------------------------------------
 if g:islinux
-    set hlsearch        "高亮搜索
-    set incsearch       "在输入要搜索的文字时,实时匹配
 
     " Uncomment the following to have Vim jump to the last position when
     " reopening a file
@@ -86,7 +84,7 @@ if g:islinux
             syntax on
         endif
 
-        set mouse=a                    " 在任何模式下启用鼠标
+        " set mouse=a                    " 在任何模式下启用鼠标
         set t_Co=256                   " 在终端启用256色
         set backspace=2                " 设置退格键可用
 
@@ -114,48 +112,49 @@ set nocompatible                                      "禁用 Vi 兼容模式
 filetype off                                          "禁用文件类型侦测
 
 if g:islinux
-    set rtp+=~/.vim/bundle/vundle/
+    set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#rc()
 else
-    set rtp+=$VIM/vimfiles/bundle/vundle/
-    call vundle#rc('$VIM/vimfiles/bundle/')
+    set rtp+=$VIM/vimfiles/bundle/Vundle.vim
+    call vundle#rc('$VIM/vimfiles/bundle/Vundle/Vundle.vim')
 endif
 
 " 使用Vundle来管理插件,这个必须要有.
-Bundle 'gmarik/vundle'
-
+Plugin 'VundleVim/Vundle.vim'
 " 以下为要安装或更新的插件,不同仓库都有(具体书写规范请参考帮助)
+" Bundle 'jiangmiao/auto-pairs'
+" Bundle 'ccvext.vim'
+" Bundle 'ctrlpvim/ctrlp.vim'
+" Bundle 'mattn/emmet-vim'
+" Bundle 'vim-javacompleteex'
+" Bundle 'Shougo/neocomplcache.vim'
+" Bundle 'OmniCppComplete'
+" Bundle 'zenorocha/dracula-theme'
+" Bundle 'msanders/snipmate.vim'
+" Bundle 'tpope/vim-surround'
+" Bundle 'TxtBrowser'
+" Bundle 'Mark--Karkat'
+" Bundle 'winmanager'
+" Bundle 'wesleyche/SrcExpl'
+Bundle 'ZoomWin'
 Bundle 'a.vim'
 Bundle 'c.vim'
-Bundle 'Align'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'bufexplorer.zip'
-Bundle 'ccvext.vim'
+Bundle 'taglist.vim'
+Bundle 'std_c.zip'
+Bundle 'majutsushi/tagbar'
 Bundle 'cSyntaxAfter'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'mattn/emmet-vim'
-Bundle 'Yggdroot/indentLine'
-Bundle 'vim-javacompleteex'
-Bundle 'Mark--Karkat'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-" Bundle 'OmniCppComplete'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'repeat.vim'
-Bundle 'msanders/snipmate.vim'
-Bundle 'wesleyche/SrcExpl'
-Bundle 'std_c.zip'
-Bundle 'tpope/vim-surround'
+Bundle 'Align'
+Bundle 'Yggdroot/indentLine'
+Bundle 'bufexplorer.zip'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
-Bundle 'majutsushi/tagbar'
-Bundle 'taglist.vim'
-Bundle 'TxtBrowser'
-Bundle 'ZoomWin'
-Bundle 'winmanager'
-Bundle 'altercation/vim-colors-solarized'
-
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'DoxygenToolkit.vim'
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -188,72 +187,56 @@ set expandtab                                         "将Tab键转换为空格
 set tabstop=4                                         "设置Tab键的宽度,可以更改,如：宽度为2
 set shiftwidth=4                                      "换行时自动缩进宽度,可更改(宽度同tabstop)
 set smarttab                                          "指定按一次backspace就删除shiftwidth宽度
-" set foldenable                                        "启用折叠
-" set foldmethod=indent                                 "indent 折叠方式
-" set foldmethod=marker                                "marker 折叠方式
-
+set hlsearch                                          "高亮搜索
+set incsearch                                         "在输入要搜索的文字时,实时匹配
+set foldlevel=0
+set foldmethod=indent                                 "manual, ident, expr syntax, diff, marker
+set foldenable                                        "启用折叠
 " 常规模式下用空格键来开关光标行所在折叠(注：zR 展开所有折叠,zM 关闭所有折叠)
 " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-
 " 当文件在外部被修改,自动更新该文件
 set autoread
-
 " 常规模式下输入 cS 清除行尾空格
 nmap cS :%s/\s\+$//g<CR>:noh<CR>
-
 " 常规模式下输入 cM 清除行尾 ^M 符号
 nmap cM :%s/\r$//g<CR>:noh<CR>
-
 set ignorecase                                        "搜索模式里忽略大小写
 set smartcase                                         "如果搜索模式包含大写字符,不使用 'ignorecase' 选项,只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
-" set noincsearch                                       "在输入要搜索的文字时,取消实时匹配
-
 " Ctrl + K 插入模式下光标向上移动
 imap <c-k> <Up>
-
 " Ctrl + J 插入模式下光标向下移动
 imap <c-j> <Down>
-
 " Ctrl + H 插入模式下光标向左移动
 imap <c-h> <Left>
-
 " Ctrl + L 插入模式下光标向右移动
 imap <c-l> <Right>
-
 " 启用每行超过80列的字符提示(字体变蓝并加下划线),不启用就注释掉
-au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
-
+" au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+set colorcolumn=81
+set textwidth=80
 " -----------------------------------------------------------------------------
 "  < 界面配置 >
 " -----------------------------------------------------------------------------
 set number                                            "显示行号
 set relativenumber
-
 set laststatus=2                                      "启用状态栏信息
 set cmdheight=2                                       "设置命令行的高度为2,默认为1
 set cursorline                                        "突出显示当前行
-set guifont=Monaco:h11 "YaHei_Consolas_Hybrid:h10                 "设置字体:字号(字体名称空格用下划线代替)
-set wrap                                            "设置不自动换行
+set guifont=Monaco:h11 "YaHei_Consolas_Hybrid:h10     "设置字体:字号(字体名称空格用下划线代替)
+set wrap                                              "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
+set linebreak       " wrap not break english word 
+set showcmd         " show current command on status bar
+set showmode        " show current mode on command line
 
 " 设置 gVim 窗口初始位置及大小
 if g:isGUI
     " au GUIEnter * simalt ~x                           "窗口启动时自动最大化
-    winpos 100 10                                     "指定窗口出现的位置,坐标原点在屏幕左上角
-    set lines=38 columns=120                          "指定窗口大小,lines为高度,columns为宽度
-endif
-
-" 设置代码配色方案
-"set background=dark
-if g:isGUI
-"    colorscheme solarized 
-    "colorscheme Tomorrow-Night-Eighties               "Gvim配色方案
-else
-    colorscheme  Tomorrow-Night-Eighties
-endif
-
-" 显示/隐藏菜单栏、工具栏、滚动条,可用 Ctrl + F11 切换
-if g:isGUI
+    " winpos 100 10                                     "指定窗口出现的位置,坐标原点在屏幕左上角
+    " set lines=38 columns=120                          "指定窗口大小,lines为高度,columns为宽度
+    " colorscheme solarized 
+    " colorscheme Tomorrow-Night-Eighties               "Gvim配色方案
+    " 显示/隐藏菜单栏、工具栏、滚动条,可用 Ctrl + F11 切换
     set guioptions-=m
     set guioptions-=T
     set guioptions-=r
@@ -269,6 +252,8 @@ if g:isGUI
         \set guioptions+=r <Bar>
         \set guioptions+=L <Bar>
     \endif<CR>
+else 
+    colorscheme  Tomorrow-Night-Eighties
 endif
 
 " -----------------------------------------------------------------------------
@@ -509,15 +494,12 @@ endfunc
 "  < 在浏览器中预览 Html 或 PHP 文件 >
 " -----------------------------------------------------------------------------
 " 修改前请先通读此模块,明白了再改以避免错误
-
 " F5 加浏览器名称缩写调用浏览器预览,启用前先确定有安装相应浏览器,并在下面的配置好其安装目录
 if g:iswindows
     "以下为只支持Windows系统的浏览器
-
     " 调用系统IE浏览器预览,如果已卸载可将其注释
     nmap <F5>ie :call ViewInBrowser("ie")<cr>
     imap <F5>ie <ESC>:call ViewInBrowser("ie")<cr>
-
     " 调用IETester(IE测试工具)预览,如果有安装可取消注释
     " nmap <F5>ie6 :call ViewInBrowser("ie6")<cr>
     " imap <F5>ie6 <ESC>:call ViewInBrowser("ie6")<cr>
@@ -608,8 +590,8 @@ endfunction
 " -----------------------------------------------------------------------------
 set writebackup                             "保存文件前建立备份,保存成功后删除该备份
 set nobackup                                "设置无备份文件
-" set noswapfile                              "设置无临时文件
-" set vb t_vb=                                "关闭提示音
+" set noswapfile                            "设置无临时文件
+" set vb t_vb=                              "关闭提示音
 
 
 " =============================================================================
@@ -733,7 +715,7 @@ let g:neocomplcache_enable_at_startup = 1     "vim 启动时启用插件
 " 以下为插件默认快捷键,其中的说明是以C/C++为例的,其它语言类似
 " <Leader>ci 以每行一个 /* */ 注释选中行(选中区域所在行),再输入则取消注释
 " <Leader>cm 以一个 /* */ 注释选中行(选中区域所在行),再输入则称重复注释
-" <Leader>cc 以每行一个 /* */ 注释选中行或区域,再输入则称重复注释
+" <Leader>cc 以每行一个// 注释选中行或区域,再输入则称重复注释
 " <Leader>cu 取消选中区域(行)的注释,选中区域(行)内至少有一个 /* */
 " <Leader>ca 在/*...*/与//这两种注释方式中切换(其它语言可能不一样了)
 " <Leader>cA 行尾注释
@@ -743,8 +725,8 @@ let NERDSpaceDelims = 1                     "在左注释符之后,右注释符�
 " -----------------------------------------------------------------------------
 " 有目录村结构的文件浏览插件
 
-" 常规模式下输入 F2 调用插件
-nmap <F2> :NERDTreeToggle<CR>
+" 常规模式下输入'\fe' 调用插件
+nmap <Leader>fe :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Config Winmanager
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -831,21 +813,21 @@ filetype plugin indent on
 "-- omnicppcomplete setting --
 " 按下F3自动补全代码,注意该映射语句后不能有其他字符,包括tab；否则按下F3会自动补全
 " 一些乱码
-"imap <F3> <C-X><C-O>
+" imap <F3> <C-X><C-O>
 " 按下F2根据头文件内关键字补全
-"imap <F2> <C-X><C-I>
-"set completeopt=menu,menuone " 关掉智能补全时的预览窗口
-"let OmniCpp_MayCompleteDot = 1 " autocomplete with .
-"let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-"let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-"let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-"let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-"let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
-"let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
-"let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
-""let OmniCpp_DefaultNamespaces=["std"]
-"let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
-"let OmniCpp_ShowAccess=1 
+" imap <F2> <C-X><C-I>
+set completeopt=menu,menuone " 关掉智能补全时的预览窗口
+let OmniCpp_MayCompleteDot = 1 " autocomplete with .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+let OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
+let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
+let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
+"let OmniCpp_DefaultNamespaces=["std"]
+let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
+let OmniCpp_ShowAccess=1 
 
 " -----------------------------------------------------------------------------
 "  < powerline 插件配置 >
@@ -868,13 +850,12 @@ filetype plugin indent on
 "  < SrcExpl 插件配置 >
 " -----------------------------------------------------------------------------
 " 增强源代码浏览,其功能就像Windows中的"Source Insight"
-nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
+" nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
 
 " -----------------------------------------------------------------------------
 "  < std_c 插件配置 >
 " -----------------------------------------------------------------------------
 " 用于增强C语法高亮
-
 " 启用 // 注视风格
 let c_cpp_comments = 0
 
@@ -898,7 +879,7 @@ let c_cpp_comments = 0
 nmap tb :TlistClose<CR>:TagbarToggle<CR>
 
 let g:tagbar_width=30                       "设置窗口宽度
-" let g:tagbar_left=1                         "在左侧窗口中显示
+let g:tagbar_left=1                         "在左侧窗口中显示
 
 " -----------------------------------------------------------------------------
 "  < TagList 插件配置 >
@@ -953,41 +934,41 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 用ctags -R 命令生成ctags文件的时候默认的不找.m文件玩的.知道了原因后,解决方法
 " 也很简单,上面不是生成了索引库文件cscope.files文件么,另外,ctags 还有一个 -L
 " 选项. ctags -L ./cscope.files
-"if has("cscope")
-"    "设定可以使用 quickfix 窗口来查看 cscope 结果
-"    set cscopequickfix=s-,c-,d-,i-,t-,e-
-"    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
-"    set cscopetag
-"    "如果你想反向搜索顺序设置为1
-"    set csto=0
-"    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out
-"    cs add ~/Documents/mupdf/cscope.out
-"    "if filereadable("~/Documents/openssl/openssl-1.0.2h/cscope.out")
-"    "    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out        "否则添加数据库环境中所指出的
-"    "elseif $CSCOPE_DB != ""
-"    "    cs add $CSCOPE_DB
-"    "endif
-"    set cscopeverbose
-"    "快捷键设置
-"    nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-"    nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-"    nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"    nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-"endif
+" if has("cscope")
+"     "设定可以使用 quickfix 窗口来查看 cscope 结果
+"     set cscopequickfix=s-,c-,d-,i-,t-,e-
+"     "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+"     set cscopetag
+"     "如果你想反向搜索顺序设置为1
+"     set csto=0
+"     cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out
+"     cs add ~/Documents/mupdf/cscope.out
+"     "if filereadable("~/Documents/openssl/openssl-1.0.2h/cscope.out")
+"     "    cs add ~/Documents/openssl/openssl-1.0.2h/cscope.out        "否则添加数据库环境中所指出的
+"     "elseif $CSCOPE_DB != ""
+"     "    cs add $CSCOPE_DB
+"     "endif
+"     set cscopeverbose
+"     "快捷键设置
+"     nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+"     nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+"     nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+"     nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+"     nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+"     nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+"     nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"     nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+" endif
 
 " -----------------------------------------------------------------------------
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+" map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+" imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
 " map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-set tags+=./tags,~/Documents/mupdf/tags,~/Documents/mupdf/tags_stl,~/Documents/openssl/openssl-1.0.2h/tags;
+" set tags+=./tags,~/Documents/mupdf/tags,~/Documents/mupdf/tags_stl,~/Documents/openssl/openssl-1.0.2h/tags;
 
 " -----------------------------------------------------------------------------
 "  < gvimfullscreen 工具配置 > 请确保已安装了工具
@@ -1070,8 +1051,64 @@ au BufRead,BufNewFile,BufEnter * cd %:p:h
 " 指在常规模式下按"\"键加"t"键,这里不是同时按,而是先按"\"键后按"t"键,间隔在一
 " 秒内,而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键,可以把
 " 下面的设置取消注释,并修改双引号中的键为你想要的,如修改为逗号键.
-
 " let mapleader = ","
 syntax enable
 set background=dark
 color solarized
+" =============================================================================
+" YouCompleteMe configuarations
+" =============================================================================
+"设置关健字触发补全
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'  
+let g:ycm_auto_trigger=1
+let g:ycm_complete_in_comments=1
+let g:ycm_confirm_extra_conf=0
+let g:ycm_complete_in_strings = 1
+" let g:ycm_collect_identifiers_from_tags_files=1   " 开启YCM基于ctags
+" set completeopt-=preview                          " 补全内容不以分割子窗口形式出现，只显示补全列表
+let g:ycm_min_num_of_chars_for_completion=3         " 从第一个键入字符就开始罗列匹配项
+let g:ycm_cache_omnifunc=0                          " 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_seed_identifiers_with_syntax = 1          "开启语义补全  
+let g:ycm_use_ultisnips_completer=0                 "不查询ultisnips提供的代码模板补全，如果需要，设置成1即可  
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_key_invoke_completion='<C-c>'
+let g:ycm_error_symbol='>>'
+let g:ycm_warning_symbol='>*'
+let g:clang_snippets_engine='clang_complete'
+let g:ycm_add_preview_to_completeopt=1
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_autoclose_preview_window_after_completion=0
+" 触发补全的按键, 设置以后自动在c中触发
+" let g:ycm_semantic_triggers =  {'c' : ['->', '.', 're![a-zA-Z]{2}\w+'],   
+"   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+"   \             're!\[.*\]\s'],
+"   \   'ocaml' : ['.', '#'],
+"   \   'cpp,objcpp' : ['->', '.', '::'],
+"   \   'perl' : ['->'],
+"   \   'php' : ['->', '::'],
+"   \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+"   \   'ruby' : ['.', '::'],
+"   \   'lua' : ['.', ':'],
+"   \   'erlang' : [':'],
+"   \ }
+" nmap <F4> :YcmDiags<CR>
+nnoremap <leader>co :YcmDiags<CR>
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_key_list_select_completion = ['<TAB>', '<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<c-p>', '<Up>']
+" echo | clang -v -E -x c++ -
+" #include "..." search starts here:
+" #include <...> search starts here:
+" =============================================================================
+" DoxygenToolkit.vim : Simplify Doxygen documentation in C, C++, Python. 
+" DoxLic、DoxAuthor、Dox
+" =============================================================================
+let g:DoxygenToolkit_briefTag_pre="@Synopsis " 
+let g:DoxygenToolkit_paramTag_pre="@Param " 
+let g:DoxygenToolkit_returnTag="@Returns " 
+let g:DoxygenToolkit_blockHeader="" 
+let g:DoxygenToolkit_blockFooter="" 
+let g:DoxygenToolkit_authorName="zl, 88911562@qq.com" 
+let g:DoxygenToolkit_licenseTag="Copyright(c) NTKO"
+    set lines=100 columns=200                          "指定窗口大小,lines为高度,columns为宽度
+" read !date +\[\%Y-\%m-\%d\ \%H:\%M:\%S\]             "insert local time
