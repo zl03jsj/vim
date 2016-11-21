@@ -1,0 +1,124 @@
+/* commond line {{{
+// del files result from 'find'
+find path -name ‘thename’ |xargs rm -rf 
+find ~/ -name 'core*' -exec rm {} \;
+
+find searchpath -regex "regex" |xargs grep "find_context"
+find ./ -iregex '.*\.[ch]'
+
+// zip dir
+zip -r z_openssl.zip ./z_openssl_bk/
+unzip -oq z_openssl.zip -d z_openssl_bk/
+
+// extract rar file
+brew install unrar
+unrar x pdf_signedfile.rar ~/Downloads/pdf_signedfile
+
+// show dir size
+du -h -depth=1
+
+// shut down
+sudo shutdown -h now
+sudo shutdown -h +10
+sudo shutdown -h 22:00
+sudo shutdown -h 1209032315     // shutdown at 2012/09/3/ 23:15
+sudo shutdown -r 1209032315     // restart at specified time
+sudo shutdown -s 1209032315     // sleep at specified time
+
+// find stdlibc++ include path
+echo | clang -std=c++11 -stdlib=libc++ -v -E -x c++ -
+
+// search and kill process in terminal
+ps -ef|grep processname|awk ‘{print $2}’|xargs kill -9
+ps aux|grep processname
+kill processid
+}}}
+/* vim {{{
+vim : cscope
+:cs find s symbol_string : Find this C symbol(symbol_string)
+:cw                      : show find result in cscope window
+
+
+// the vim bookmark relative hotkeys {
+m{a-zA-Z}   // create bookmark, lowercase only in current edit file, upercase global
+'{a-zA-Z}   // goto boobkmark
+'0          // go to last exit in file
+"           // go to last jump
+'"          // go to last edit
+g'{mark}    // jump to {mark}
+:delm{marks}// delete a mark
+:delm!      // delete all marks
+:marks      // show all bookmarks
+zz,zt,zb    // move line of cursor to top/middle/bottom of screen
+H,M,L       // move cursor to top/middle/bottom of screen
+
+// }
+
+// gdb lookup memory
+x /4xw 0xbffff2ec // x /[size][hex mode][4 byte one unit] address
+
+// hex view and edit
+:%!xxd      // hex mode
+:%!xxd -r   // return normal mode
+
+
+// in a C program, you may want an array that holds data equivalent to the contents 
+// of a binary file. The following command reads a dump of file sample.bin, formatted as C source:
+:r !xxd -i sample.bin
+Using the same binary file as earlier, the result would be:
+unsigned char sample_bin[] = {
+  0x00, 0x01, 0x02, 0x03, 0x30, 0x31, 0x32, 0x33, 0x04, 0x05, 0x06, 0x07,
+  0x44, 0x45, 0x46, 0x47, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+  0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f
+};
+unsigned int sample_bin_len = 32;
+
+
+// Use the -b option to set binary mode before editing a binary file, for example:
+vim -b myfile.bin
+// If wanted, you can display nonprintable characters in hex, and you can wrap lines:
+:setlocal display=uhex
+:setlocal wrap
+/* In normal mode, type g then Ctrl-G to display the byte number at the cursor, or type */
+/* a byte number then go to jump to that byte (for example, 123go will jump to byte number 123). */
+/* The first byte in the file has byte number 1. */
+/* The following command replaces the buffer with a hex dump: */
+:%!xxd
+You can edit the hex bytes, then convert the file back to binary with the command:
+
+
+
+}}}
+/* mac, xcode!!!!!{{{
+XCode hot key:
+command + alt + leftArror  ⌘⌥⇠  	// fold
+command + alt + rightArror ⌘⌥→ 	// unfold
+command + alt + shift + leftArror	// fold method and 
+command + alt + shift + rightArror	// unfold method 
+control + \ 						// code format
+control + o 						// insert new line 
+alt + command + [ 			⌥⌘[	// open move line up
+alt + command + ] 			⌥⌘]	// open move line down
+command ＋ control ＋ space ⌘⌃  	// open emoji&symbols viewer
+control + command + j 		⌃⌘j	// jump to definition
+//xcode 清除项目的缓存文件!!!!
+sudo rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
+电源键 = power = eject
+电源键 1 秒左右, 睡眠
+电源键 2-3秒, 弹出 选择关机重启睡眠 选项框
+电源键 5 秒. 强制关机
+command+option+power            sleep
+command+control+power           restart
+command+control+option+power    shutdown
+control+power                   dialog for chose of sleep, restart, shutdown 
+shift  +control+power           close screen
+shift  +control+option+power    force shutdown 
+
+// search and kill process in terminal
+ps -ef|grep processname|awk ‘{print $2}’|xargs kill -9
+ps aux|grep processname
+ie:ps -ef|grep vim
+kill processid
+}}}
+
