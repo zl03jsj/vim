@@ -47,22 +47,17 @@ flags = [
 # a "-std=<something>".
 # For a C project, you would set this to something like 'c99' instead of
 # 'c++11'.
-'-std=c11',
+'-std=c++11',
 # ...and the same thing goes for the magic -x option which specifies the
 # language that the files to be compiled are written in. This is mostly
 # relevant for c++ headers.
 # For a C project, you would set this to 'c' instead of 'c++'.
-'-x', 'c',
+'-x', 'c++',
 '-I', '.',
-'-isystem', '/Users/zl03jsj/Documents/mupdf/include',
-'-isystem', '/Users/zl03jsj/Documents/mupdf/generated',
-'-isystem',
-'/Users/zl03jsj/Documents/mupdf/thirdparty/freetype/include',
-'-isystem', '/usr/include',
-'-isystem', '/usr/local/include',
-'-isystem', '/Library/Developer/CommandLineTools/usr/include',
 '-isystem', '/Library/Developer/CommandLineTools/usr/include/c++/v1',
 '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1',
+'-isystem', '/usr/include/'
+'-isystem', '/usr/local/include'
 ]
  
 # Set this to the absolute path to the folder (NOT the file!) containing the
